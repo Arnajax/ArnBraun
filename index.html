@@ -12,13 +12,15 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #faf8f5;
-      --bg2:       #f0ece6;
-      --text:      #1a1410;
-      --muted:     #7a6e65;
-      --accent:    #c9a96e;
-      --serif:     'Playfair Display', Georgia, serif;
-      --sans:      'DM Sans', system-ui, sans-serif;
+      --bg:     #faf8f5;
+      --bg2:    #f0ece6;
+      --text:   #1a1410;
+      --muted:  #7a6e65;
+      --accent: #c9a96e;
+      --serif:  'Playfair Display', Georgia, serif;
+      --sans:   'DM Sans', system-ui, sans-serif;
+      /* desktop centering: padding grows beyond 80px once viewport > 1400px */
+      --gutter: max(80px, calc((100vw - 1240px) / 2));
     }
 
     html { scroll-behavior: smooth; }
@@ -40,7 +42,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 28px 48px;
+      padding: 28px var(--gutter);
       transition: background .4s ease, backdrop-filter .4s ease, padding .4s ease;
     }
     #nav.s {
@@ -48,7 +50,8 @@
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(201,169,110,.12);
-      padding: 20px 48px;
+      padding-top: 18px;
+      padding-bottom: 18px;
     }
 
     .logo {
@@ -79,7 +82,7 @@
     #nav.s .nav-links a { color: var(--text); }
     .nav-links a:hover { color: var(--accent); }
 
-    /* hamburger */
+    /* hamburger — mobile only */
     .burger {
       display: none;
       flex-direction: column;
@@ -127,8 +130,9 @@
     .mobile-menu a:hover { color: var(--accent); }
 
     @media (max-width: 768px) {
-      #nav { padding: 22px 24px; }
-      #nav.s { padding: 18px 24px; }
+      :root { --gutter: 24px; }
+      #nav { padding: 22px var(--gutter); }
+      #nav.s { padding-top: 16px; padding-bottom: 16px; }
       .nav-links { display: none; }
       .burger { display: flex; }
     }
@@ -154,51 +158,52 @@
       inset: 0;
       background: linear-gradient(
         to bottom,
-        rgba(26,20,16,.18) 0%,
-        rgba(26,20,16,0)   45%,
-        rgba(26,20,16,.55) 100%
+        rgba(26,20,16,.15) 0%,
+        rgba(26,20,16,0)   40%,
+        rgba(26,20,16,.6)  100%
       );
     }
     .hero-body {
       position: absolute;
-      bottom: 64px;
-      left: 52px;
-      right: 52px;
-    }
-    .hero-tag {
-      display: block;
-      font-size: 10px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: .24em;
-      color: var(--accent);
-      margin-bottom: 14px;
+      bottom: 72px;
+      left: var(--gutter);
+      right: var(--gutter);
     }
     .hero-name {
       font-family: var(--serif);
-      font-size: clamp(56px, 8.5vw, 100px);
+      font-size: clamp(60px, 9vw, 116px);
       font-weight: 400;
       color: #fff;
-      line-height: .93;
-      letter-spacing: -.02em;
+      line-height: .92;
+      letter-spacing: -.025em;
+      margin-bottom: 36px;
     }
-    .hero-sub {
-      margin-top: 22px;
-      font-size: 11px;
-      font-weight: 400;
-      letter-spacing: .16em;
+    .hero-btn {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 500;
       text-transform: uppercase;
-      color: rgba(255,255,255,.55);
+      letter-spacing: .2em;
+      color: rgba(255,255,255,.85);
+      border: 1px solid rgba(255,255,255,.35);
+      padding: 13px 32px;
+      text-decoration: none;
+      transition: background .3s, color .3s, border-color .3s;
+    }
+    .hero-btn:hover {
+      background: rgba(255,255,255,.12);
+      border-color: rgba(255,255,255,.65);
+      color: #fff;
     }
     .scroll-cue {
       position: absolute;
       bottom: 36px;
-      right: 52px;
+      right: var(--gutter);
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 10px;
-      color: rgba(255,255,255,.45);
+      color: rgba(255,255,255,.4);
       font-size: 8.5px;
       font-weight: 500;
       letter-spacing: .2em;
@@ -215,18 +220,17 @@
       0%,100% { opacity: .5; }
       50%      { opacity: 1; }
     }
-
     @media (max-width: 768px) {
-      .hero-body { bottom: 52px; left: 28px; right: 28px; }
+      .hero-body { bottom: 52px; }
       .scroll-cue { display: none; }
     }
 
-    /* ── SHARED SECTION STYLES ───────────────────── */
+    /* ── SHARED SECTION ──────────────────────────── */
     .sec {
-      padding: 108px 52px;
+      padding: 112px var(--gutter);
     }
     @media (max-width: 768px) {
-      .sec { padding: 76px 24px; }
+      .sec { padding: 76px var(--gutter); }
     }
 
     .lbl {
@@ -240,10 +244,10 @@
     }
     .sec-title {
       font-family: var(--serif);
-      font-size: clamp(28px, 3.5vw, 44px);
+      font-size: clamp(30px, 3.6vw, 50px);
       font-weight: 400;
-      line-height: 1.1;
-      margin-bottom: 56px;
+      line-height: 1.08;
+      margin-bottom: 60px;
     }
 
     /* ── FADE-IN ─────────────────────────────────── */
@@ -265,14 +269,14 @@
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
-      margin-bottom: 48px;
+      margin-bottom: 52px;
     }
     .port-header .sec-title { margin-bottom: 0; }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
+      gap: 20px;
     }
     @media (max-width: 768px) {
       .grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
@@ -302,26 +306,22 @@
       background: rgba(26,20,16,0);
       transition: background .4s;
     }
-    .pi:hover .pi-veil { background: rgba(26,20,16,.12); }
-
+    .pi:hover .pi-veil { background: rgba(26,20,16,.1); }
     .pi.gone { display: none; }
 
-    .lm-wrap {
-      text-align: center;
-      margin-top: 60px;
-    }
+    .lm-wrap { text-align: center; margin-top: 64px; }
     .btn-lm {
       font-size: 10px;
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: .2em;
       color: var(--text);
-      padding: 13px 38px;
-      border: 1px solid rgba(26,20,16,.22);
+      padding: 13px 40px;
+      border: 1px solid rgba(26,20,16,.2);
       background: transparent;
       cursor: pointer;
-      transition: background .3s, color .3s, border-color .3s;
       font-family: var(--sans);
+      transition: background .3s, color .3s, border-color .3s;
     }
     .btn-lm:hover {
       background: var(--text);
@@ -353,16 +353,16 @@
       position: absolute;
       background: none;
       border: none;
-      color: rgba(255,255,255,.55);
+      color: rgba(255,255,255,.5);
       cursor: pointer;
-      transition: color .2s;
       font-family: var(--sans);
       line-height: 1;
+      transition: color .2s;
     }
     .lb-btn:hover { color: #fff; }
     #lb-close { top: 24px; right: 32px; font-size: 30px; font-weight: 200; padding: 8px; }
-    #lb-prev  { left: 20px; top: 50%; transform: translateY(-50%); font-size: 34px; padding: 12px 18px; }
-    #lb-next  { right: 20px; top: 50%; transform: translateY(-50%); font-size: 34px; padding: 12px 18px; }
+    #lb-prev  { left: 20px; top: 50%; transform: translateY(-50%); font-size: 36px; padding: 12px 20px; }
+    #lb-next  { right: 20px; top: 50%; transform: translateY(-50%); font-size: 36px; padding: 12px 20px; }
     #lb-count {
       position: absolute;
       bottom: 22px;
@@ -370,9 +370,8 @@
       transform: translateX(-50%);
       font-size: 10px;
       letter-spacing: .16em;
-      color: rgba(255,255,255,.32);
+      color: rgba(255,255,255,.28);
     }
-
     @media (max-width: 768px) {
       #lb-prev, #lb-next { font-size: 26px; padding: 10px 14px; }
     }
@@ -382,6 +381,9 @@
       background: var(--bg2);
       text-align: center;
     }
+    #instagram .sec-title { margin-bottom: 40px; }
+    behold-widget { display: block; margin: 0 auto; }
+
     .ig-link {
       display: inline-flex;
       align-items: center;
@@ -392,12 +394,10 @@
       color: var(--text);
       text-decoration: none;
       transition: color .25s;
-      margin-top: 20px;
+      margin-top: 36px;
     }
     .ig-link:hover { color: var(--accent); }
     .ig-icon { width: 17px; height: 17px; fill: currentColor; flex-shrink: 0; }
-    #instagram .sec-title { margin-bottom: 8px; }
-    #instagram .lbl { justify-content: center; text-align: center; }
 
     /* ── STATS ───────────────────────────────────── */
     #stats { background: var(--bg); }
@@ -405,18 +405,16 @@
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      max-width: 780px;
+      max-width: 880px;
     }
     @media (max-width: 860px) {
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     .si {
-      padding: 30px 40px 30px 0;
+      padding: 32px 44px 32px 0;
       border-bottom: 1px solid rgba(26,20,16,.07);
     }
-    /* remove bottom border from last row */
-    .stats-grid { position: relative; }
     .si:nth-last-child(-n+4) { border-bottom: none; }
     @media (max-width: 860px) {
       .si:nth-last-child(-n+4) { border-bottom: 1px solid rgba(26,20,16,.07); }
@@ -429,11 +427,11 @@
       text-transform: uppercase;
       letter-spacing: .22em;
       color: var(--accent);
-      margin-bottom: 9px;
+      margin-bottom: 10px;
     }
     .si-val {
       font-family: var(--serif);
-      font-size: 26px;
+      font-size: 28px;
       font-weight: 400;
       color: var(--text);
     }
@@ -444,7 +442,7 @@
       font-weight: 300;
       margin-left: 2px;
     }
-    .si-val.text-val { font-size: 18px; }
+    .si-val.text-val { font-size: 20px; }
 
     /* ── ABOUT ───────────────────────────────────── */
     #about { background: var(--bg2); }
@@ -453,50 +451,113 @@
       font-size: clamp(20px, 2.4vw, 28px);
       font-weight: 400;
       font-style: italic;
-      line-height: 1.6;
+      line-height: 1.65;
       color: var(--text);
-      opacity: .55;
+      opacity: .5;
       max-width: 620px;
     }
 
     /* ── CONTACT ─────────────────────────────────── */
     #contact { background: var(--text); }
-    #contact .lbl  { color: var(--accent); }
-    #contact .sec-title { color: var(--bg); }
+    #contact .lbl       { color: var(--accent); }
+    #contact .sec-title { color: var(--bg); margin-bottom: 48px; }
 
-    .c-links { display: flex; flex-direction: column; gap: 0; max-width: 500px; }
-    .c-link {
-      display: block;
-      padding: 28px 0;
-      border-bottom: 1px solid rgba(250,248,245,.08);
-      text-decoration: none;
-      transition: border-color .3s;
+    /* form */
+    .cf {
+      max-width: 620px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      margin-bottom: 52px;
     }
-    .c-link:last-child { border-bottom: none; }
-    .c-link:hover { border-color: rgba(201,169,110,.4); }
-    .c-link-title {
-      display: block;
-      font-family: var(--serif);
-      font-size: 22px;
-      font-weight: 400;
-      color: var(--bg);
-      margin-bottom: 5px;
-      transition: color .25s;
+    .cf-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
     }
-    .c-link:hover .c-link-title { color: var(--accent); }
-    .c-link-sub {
-      font-size: 11px;
-      font-weight: 400;
-      letter-spacing: .1em;
-      color: rgba(250,248,245,.38);
+    @media (max-width: 560px) {
+      .cf-row { grid-template-columns: 1fr; }
+    }
+    .cf-group {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .cf-label {
+      font-size: 9px;
+      font-weight: 500;
       text-transform: uppercase;
+      letter-spacing: .22em;
+      color: var(--accent);
     }
+    .cf-opt {
+      color: rgba(250,248,245,.28);
+      font-size: 8px;
+      text-transform: none;
+      letter-spacing: .08em;
+      margin-left: 4px;
+    }
+    .cf-input {
+      width: 100%;
+      background: rgba(250,248,245,.05);
+      border: 1px solid rgba(250,248,245,.11);
+      color: var(--bg);
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 300;
+      padding: 14px 16px;
+      outline: none;
+      border-radius: 0;
+      -webkit-appearance: none;
+      transition: border-color .25s, background .25s;
+    }
+    .cf-input::placeholder { color: rgba(250,248,245,.22); }
+    .cf-input:focus {
+      border-color: rgba(201,169,110,.45);
+      background: rgba(250,248,245,.08);
+    }
+    .cf-textarea { resize: vertical; min-height: 140px; }
+    .cf-submit {
+      align-self: flex-start;
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: .2em;
+      color: var(--bg);
+      padding: 14px 42px;
+      border: 1px solid rgba(250,248,245,.22);
+      background: transparent;
+      cursor: pointer;
+      font-family: var(--sans);
+      transition: background .3s, color .3s, border-color .3s;
+    }
+    .cf-submit:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    .cf-booking {
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(250,248,245,.32);
+      letter-spacing: .04em;
+      line-height: 1.8;
+      max-width: 620px;
+    }
+    .cf-booking-link {
+      color: rgba(201,169,110,.65);
+      text-decoration: none;
+      transition: color .25s;
+      margin-left: 3px;
+    }
+    .cf-booking-link:hover { color: var(--accent); }
 
     /* ── FOOTER ──────────────────────────────────── */
     footer {
       background: var(--text);
       border-top: 1px solid rgba(250,248,245,.05);
-      padding: 28px 52px;
+      padding: 28px var(--gutter);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -504,10 +565,10 @@
     footer p {
       font-size: 10px;
       letter-spacing: .12em;
-      color: rgba(250,248,245,.25);
+      color: rgba(250,248,245,.22);
     }
     @media (max-width: 768px) {
-      footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+      footer { flex-direction: column; gap: 8px; text-align: center; }
     }
   </style>
 </head>
@@ -527,7 +588,7 @@
   </ul>
 </nav>
 
-<!-- Mobile menu -->
+<!-- Mobile full-screen menu -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="#portfolio" onclick="closeMenu()">Portfolio</a>
   <a href="#stats"     onclick="closeMenu()">Stats</a>
@@ -545,9 +606,8 @@
   >
   <div class="hero-veil"></div>
   <div class="hero-body">
-    <span class="hero-tag">Commercial Model</span>
     <h1 class="hero-name">Arn<br>Braun</h1>
-    <p class="hero-sub">De Boekers &mdash; Amsterdam</p>
+    <a href="#portfolio" class="hero-btn">View Portfolio</a>
   </div>
   <div class="scroll-cue">Scroll</div>
 </section>
@@ -571,11 +631,17 @@
 <!-- ── INSTAGRAM ── -->
 <section id="instagram" class="sec">
   <div class="fi">
-    <span class="lbl" style="display:block;text-align:center;">Follow</span>
-    <h2 class="sec-title" style="text-align:center;">Instagram</h2>
+    <span class="lbl" style="text-align:center;">Follow</span>
+    <h2 class="sec-title">Instagram</h2>
   </div>
-  <!-- BEHOLD WIDGET HERE -->
   <div class="fi d1">
+    <behold-widget feed-id="QpX3PLkUleM5EN0zqiEA"></behold-widget>
+    <script>
+      (() => {
+        const d=document,s=d.createElement("script");s.type="module";
+        s.src="https://w.behold.so/widget.js";d.head.append(s);
+      })();
+    </script>
     <a href="https://www.instagram.com/arnbraun/" target="_blank" rel="noopener noreferrer" class="ig-link">
       <svg class="ig-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
@@ -637,26 +703,69 @@
 <section id="contact" class="sec">
   <span class="lbl fi">Get in touch</span>
   <h2 class="sec-title fi d1">Contact</h2>
-  <div class="c-links">
-    <a
-      href="https://www.deboekers.nl/men/national/arn-braun"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="c-link fi d2"
-    >
-      <span class="c-link-title">De Boekers</span>
-      <span class="c-link-sub">Booking &amp; representation &mdash; Amsterdam</span>
-    </a>
-    <a
-      href="https://www.instagram.com/arnbraun/"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="c-link fi d3"
-    >
-      <span class="c-link-title">@arnbraun</span>
-      <span class="c-link-sub">Instagram</span>
-    </a>
-  </div>
+
+  <!-- Replace YOUR_FORM_ID with Formspree ID -->
+  <form
+    action="https://formspree.io/f/YOUR_FORM_ID"
+    method="POST"
+    class="cf fi d2"
+  >
+    <div class="cf-row">
+      <div class="cf-group">
+        <label class="cf-label" for="cf-name">Name</label>
+        <input
+          type="text"
+          id="cf-name"
+          name="name"
+          required
+          class="cf-input"
+          placeholder="Your name"
+          autocomplete="name"
+        >
+      </div>
+      <div class="cf-group">
+        <label class="cf-label" for="cf-email">Email</label>
+        <input
+          type="email"
+          id="cf-email"
+          name="email"
+          required
+          class="cf-input"
+          placeholder="your@email.com"
+          autocomplete="email"
+        >
+      </div>
+    </div>
+    <div class="cf-group">
+      <label class="cf-label" for="cf-phone">
+        Phone <span class="cf-opt">(optional)</span>
+      </label>
+      <input
+        type="tel"
+        id="cf-phone"
+        name="phone"
+        class="cf-input"
+        placeholder="+31 6 …"
+        autocomplete="tel"
+      >
+    </div>
+    <div class="cf-group">
+      <label class="cf-label" for="cf-msg">Message</label>
+      <textarea
+        id="cf-msg"
+        name="message"
+        required
+        class="cf-input cf-textarea"
+        placeholder="Tell me about your project…"
+      ></textarea>
+    </div>
+    <button type="submit" class="cf-submit">Send message</button>
+  </form>
+
+  <p class="cf-booking fi d3">
+    For bookings contact De Boekers directly:
+    <a href="mailto:karin@de-boekers.nl" class="cf-booking-link">karin@de-boekers.nl</a>
+  </p>
 </section>
 
 <!-- ── FOOTER ── -->
@@ -668,9 +777,9 @@
 <!-- ── LIGHTBOX ── -->
 <div id="lb" role="dialog" aria-modal="true" aria-label="Image viewer">
   <button id="lb-close" class="lb-btn" onclick="lbClose()" aria-label="Close">&#215;</button>
-  <button id="lb-prev"  class="lb-btn" onclick="lbNav(-1)" aria-label="Previous">&#8249;</button>
+  <button id="lb-prev"  class="lb-btn" onclick="lbNav(-1)"  aria-label="Previous">&#8249;</button>
   <img id="lb-img" src="" alt="">
-  <button id="lb-next"  class="lb-btn" onclick="lbNav(1)"  aria-label="Next">&#8250;</button>
+  <button id="lb-next"  class="lb-btn" onclick="lbNav(1)"   aria-label="Next">&#8250;</button>
   <p id="lb-count"></p>
 </div>
 
@@ -712,7 +821,9 @@
   IMGS.forEach((src, i) => {
     const div = document.createElement('div');
     const col  = i % 3;
-    div.className = 'pi fi' + (i < INIT ? '' : ' gone') + (col === 1 ? ' d1' : col === 2 ? ' d2' : '');
+    div.className = 'pi fi'
+      + (i < INIT ? '' : ' gone')
+      + (col === 1 ? ' d1' : col === 2 ? ' d2' : '');
     div.innerHTML = `<img src="${src}" alt="Arn Braun" loading="${i < 6 ? 'eager' : 'lazy'}"><div class="pi-veil"></div>`;
     div.addEventListener('click', () => lbOpen(i));
     grid.appendChild(div);
@@ -722,15 +833,13 @@
     const hidden = grid.querySelectorAll('.pi.gone');
     hidden.forEach(el => el.classList.remove('gone'));
     document.getElementById('lmWrap').style.display = 'none';
-    // trigger fade-in for newly revealed items
     requestAnimationFrame(() => requestAnimationFrame(() => {
       hidden.forEach(el => { if (!el.classList.contains('in')) el.classList.add('in'); });
     }));
   }
 
   /* ── Lightbox ── */
-  let lbIdx = 0;
-  let tsX   = 0;
+  let lbIdx = 0, tsX = 0;
 
   function lbOpen(i) {
     lbIdx = i;
@@ -747,24 +856,19 @@
     lbRender();
   }
   function lbRender() {
-    document.getElementById('lb-img').src   = IMGS[lbIdx];
+    document.getElementById('lb-img').src = IMGS[lbIdx];
     document.getElementById('lb-count').textContent = (lbIdx + 1) + ' / ' + IMGS.length;
   }
 
-  // Close on backdrop click
   document.getElementById('lb').addEventListener('click', e => {
     if (e.target === document.getElementById('lb')) lbClose();
   });
-
-  // Keyboard
   document.addEventListener('keydown', e => {
     if (!document.getElementById('lb').classList.contains('on')) return;
     if (e.key === 'Escape')      lbClose();
     if (e.key === 'ArrowRight') { lbIdx = (lbIdx + 1) % IMGS.length; lbRender(); }
     if (e.key === 'ArrowLeft')  { lbIdx = (lbIdx - 1 + IMGS.length) % IMGS.length; lbRender(); }
   });
-
-  // Swipe
   document.getElementById('lb').addEventListener('touchstart', e => {
     tsX = e.changedTouches[0].clientX;
   }, { passive: true });
